@@ -9,6 +9,10 @@ class CartItem extends React.Component{
             qty: 1,
             image:''
         }
+        //this.increaseQuantity = this.increaseQuantity.bind(this);
+    }
+    increaseQuantity = () => {
+        console.log('this',this.state);
     }
     render(){
          const {price,title,qty} = this.state;
@@ -23,9 +27,21 @@ class CartItem extends React.Component{
                     <div style= {{color:'#777'}}>Qty:{qty}</div>
                     <div className="cart-item-actions">
                         {/*Buttons */}
-                        <img alt="increase" className="action-icons" src="https://www.flaticon.com/svg/vstatic/svg/992/992651.svg?token=exp=1611682203~hmac=8399dfe6ee0e828c23986f8fc94e7a02" />
-                        <img alt="decrease" className="action-icons" src="https://www.flaticon.com/svg/vstatic/svg/992/992683.svg?token=exp=1611682074~hmac=3eb792825c073df32acdf865fff7a58b" />
-                        <img alt="delete" className="action-icons" src="https://www.flaticon.com/svg/vstatic/svg/3096/3096687.svg?token=exp=1611682282~hmac=2349e11776496e73dc7594202e946db1" />
+                        <img 
+                           alt="increase" 
+                           className="action-icons" 
+                           src="https://www.flaticon.com/svg/vstatic/svg/992/992651.svg?token=exp=1611682203~hmac=8399dfe6ee0e828c23986f8fc94e7a02" 
+                           onClick = {this.increaseQuantity}
+                           />
+                           
+                        <img 
+                           alt="decrease" 
+                           className="action-icons" 
+                           src="https://www.flaticon.com/svg/vstatic/svg/992/992683.svg?token=exp=1611682074~hmac=3eb792825c073df32acdf865fff7a58b" />
+                        <img 
+                            alt="delete" 
+                            className="action-icons" 
+                            src="https://www.flaticon.com/svg/vstatic/svg/3096/3096687.svg?token=exp=1611682282~hmac=2349e11776496e73dc7594202e946db1" />
                     </div>
                 </div>
 
