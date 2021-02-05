@@ -27,7 +27,7 @@ class App extends React.Component {
      },
      {
                 price:999,
-                title:'Phone',
+                title:'Mobile Phone',
                 qty: 10,
                 img:'https://images.unsplash.com/photo-1520923642038-b4259acecbd7?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=706&q=80',
                 id:3
@@ -86,13 +86,19 @@ getCartTotal = () => {
   const {products} = this.state;
   let cartTotal = 0;
   products.map((product) => {
+    if(product.qty>0){
       cartTotal = cartTotal + product.qty * product.price;
+    }
+     
+    return '';
+        
   })
    
    return cartTotal;
 }
 
   render(){
+            
             const {products} = this.state;
            return (
                   <div className="App">
