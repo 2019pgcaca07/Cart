@@ -39,10 +39,15 @@ class App extends React.Component {
   //      this.setState({
   //        products,
   //        loading:false
+
   //      })
   //    })
       this.db
        .collection('products')
+       .where('price', '==' ,150)
+       //.where('title','==','Mug')
+       //.orderBy('price')
+       
        .onSnapshot(((snapshot) =>{
         console.log(snapshot);
 
@@ -68,33 +73,77 @@ handleIncreaseQuantity = (product) => {
        console.log('hey inc the qty of',product);
        const {products} = this.state;
        const index = products.indexOf(product);
-       products[index].qty += 1;
-       this.setState({
-           products
-       })
+
+      //  products[index].qty += 1;
+      //  this.setState({
+      //      products
+      //  });
+        
+      const docRef = this.db.collection('products').doc(products[index].id);
+      docRef
+        .update({
+          qty: products[index].qty + 1
+        })
+         .then(() =>{
+           console.log('Updated successfully');
+         })
+          .catch((error)=>{
+            console.log('Error: ',error);
+          })
+
+
+
 }
 handleDecreaseQuantity = (product) => {
     console.log('hey dec the qty of',product);
     const {products} = this.state;
     const index = products.indexOf(product);
 
-    if (products[index].qty === 0) {
-        return;
-      }
+     if (products[index].qty === 0) {
+         return;
+     }
 
-    products[index].qty -= 1;
+    // products[index].qty -= 1;
 
-    this.setState({
+    // this.setState({
     
-        products
-    })
+    //     products
+    // })
+    const docRef = this.db.collection('products').doc(products[index].id);
+      docRef
+        .update({
+          
+          qty: products[index].qty - 1
+        })
+         .then(() =>{
+           console.log('Updated successfully');
+         })
+          .catch((error)=>{
+            console.log('Error: ',error);
+          })
+
 }
 handleDeleteProduct = (id) => {
  const {products} = this.state;
- const items = products.filter((item) => item.id != id);
- this.setState({
-     products: items
- })
+
+//  const items = products.filter((item) => item.id != id);
+//  this.setState({
+//      products: items
+//  })
+ 
+const docRef = this.db.collection('products').doc(id);
+docRef
+    .delete()
+      .then(() =>{
+          console.log('Deleted successfully');
+       })
+       .catch((error)=>{
+          console.log('Error: ',error);
+       })
+      
+
+
+
 }
 
 getCartCount = () => {
@@ -150,7 +199,7 @@ getCartTotal = () => {
            return (
                   <div className="App">
                   <Navbar count = {this.getCartCount()} />
-                  <button onClick = {this.addProduct} style= {{padding:20,fontSize:20}} >Add a product</button>
+                  {/* <button onClick = {this.addProduct} style= {{padding:20,fontSize:20}} >Add a product</button> */}
                   <Cart 
                         products = {products}
                         onIncreaseQuantity = {this.handleIncreaseQuantity}
